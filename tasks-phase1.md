@@ -109,20 +109,32 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 13. Create a BigQuery dataset and an external table
     
     ***place the code and output here***
+    
    
     ***why does ORC not require a table schema?***
+    As described in google cloud documentation on creating a table definition file:
+
+    Avro, Parquet, and ORC are self-describing formats. Data files in these formats contain their own schema information. If you use one of these formats as an external data source, then BigQuery automatically retrieves the schema using the source data. When creating a table definition, you don't need to use schema auto-detection, and you don't need to provide an inline schema definition or schema file.
+
+    source: [GCP documentation](https://cloud.google.com/bigquery/docs/external-table-definition)
   
-14. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
+15. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
 
     ***place the screenshot of notebook here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/891f1345-8492-41b5-ac1f-d1ccdb417cc1)
 
    
-15. Find and correct the error in spark-job.py
+16. Find and correct the error in spark-job.py
 
     ***describe the cause and how to find the error***
+    We found the error in job details of Dataproc:
+    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/bae79d91-c519-4b10-b830-41570aa07432)
 
-16. Additional tasks using Terraform:
+    following the error we found this in the spark-job.py file:
+    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/b2403f7f-bf5e-4fce-be5e-893adb2bdf7a)
+
+
+18. Additional tasks using Terraform:
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
