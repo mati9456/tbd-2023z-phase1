@@ -91,22 +91,28 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 11. Add costs by entering the expected consumption into Infracost
 
    ***place the expected consumption you entered here***
+   https://github.com/mati9456/tbd-2023z-phase1/blob/infracost/infracost-usage.yml
 
    ***place the screenshot from infracost output here***
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/38502f80-cf85-4426-b045-283fed5ed4b2)
+
 
 11. Some resources are not supported by infracost yet. Estimate manually total costs of infrastructure based on pricing costs for region used in the project. Include costs of cloud composer, dataproc and AI vertex workbanch and them to infracost estimation.
+
+    Rersources not caculated by infracost (shown by running infracost breakdown with --show-skipped flag):
+    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/6f0be827-53fb-43a6-b54d-a8dfd3b79fb7)
 
     ***place your estimation and references here***
 
     ***what are the options for cost optimization?***
     
-12. Create a BigQuery dataset and an external table
+13. Create a BigQuery dataset and an external table
     
     ***place the code and output here***
    
     ***why does ORC not require a table schema?***
   
-13. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
+14. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
 
     ***place the screenshot of notebook here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/891f1345-8492-41b5-ac1f-d1ccdb417cc1)
