@@ -109,8 +109,10 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 13. Create a BigQuery dataset and an external table
     
     ***place the code and output here***
-    
-   
+    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/5c611f01-aa0f-4f65-8a1a-ec08a40970a8)
+
+    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/f6d85216-5fda-42be-b5d8-7d1cca70736f)
+
     ***why does ORC not require a table schema?***
     As described in google cloud documentation on creating a table definition file:
 
@@ -132,6 +134,9 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
     following the error we found this in the spark-job.py file:
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/b2403f7f-bf5e-4fce-be5e-893adb2bdf7a)
+
+    after correcting this and running the job manually, the job suceeded:
+    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/0a6adaa2-e2ca-4fd4-b036-61f8fc74b3dc)
 
 
 18. Additional tasks using Terraform:
