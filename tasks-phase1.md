@@ -6,12 +6,13 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 1. Authors:
 
    Gr.2
+   Mateusz Szczęsny, Mateusz Borkowski, Maksim Makaranka
 
-   ***link to forked repo***
+   https://github.com/mati9456/tbd-2023z-phase1
    
-2. Fork https://github.com/bdg-tbd/tbd-2023z-phase1 and follow all steps in README.md.
+3. Fork https://github.com/bdg-tbd/tbd-2023z-phase1 and follow all steps in README.md.
 
-3. Select your project and set budget alerts on 5%, 25%, 50%, 80% of 50$ (in cloud console -> billing -> budget & alerts -> create buget; unclick discounts and promotions&others while creating budget).
+4. Select your project and set budget alerts on 5%, 25%, 50%, 80% of 50$ (in cloud console -> billing -> budget & alerts -> create buget; unclick discounts and promotions&others while creating budget).
 
   ![img.png](doc/figures/discounts.png)
 
@@ -33,17 +34,38 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
         * member = "serviceAccount:${var.data_service_account}"
 
     ***insert the link to the modified file and terraform snippet here***
+   https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/data-pipeline/main.tf
+   ```
+    resource "google_storage_bucket" "tbd-data-bucket" {
+    project                     = var.project_name
+    name                        = var.data_bucket_name
+    location                    = var.region
+    uniform_bucket_level_access = false #tfsec:ignore:google-storage-enable-ubla
+    force_destroy               = true
+    #checkov:skip=CKV_GCP_62: "Bucket should log access"
+    #checkov:skip=CKV_GCP_29: "Ensure that Cloud Storage buckets have uniform bucket-level access enabled"
+    #checkov:skip=CKV_GCP_78: "Ensure Cloud storage has versioning enabled"
+    public_access_prevention    = "enforced"
+    }
+  
+    resource "google_storage_bucket_iam_member" "tbd-data-bucket-iam-editor" {
+    bucket = google_storage_bucket.tbd-data-bucket.name
+    role   = "roles/storage.objectUser"
+    member = "serviceAccount:${var.data_service_account}"
+    }
+   ```
+  
+   wynik komendy ```terraform plan -var-file ./env/project.tfvars -compact-warnings``` :
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/43956a1c-5a07-464f-9832-e46af0bb1c05)
 
     Create PR from this branch to **YOUR** master and merge it to make new release. 
     
     ***place the screenshot from GA after succesfull application of release with this changes***
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/42de3c55-270e-4a55-8732-498bc40880af)
 
-    
 
-6. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
+7. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
    
-   wynik komendy ```terraform plan -var-file ./env/project.tfvars -compact-warnings``` :
-   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/43956a1c-5a07-464f-9832-e46af0bb1c05)
 
 ```terraform plan -target=module.data-pipelines.google_storage_bucket.tbd-data-bucket -var-file ./env/project.tfvars -compact-warnings -out plan.txt```
 ```terraform graph -plan=plan.txt | dot -Tsvg > graph.svg```
@@ -55,8 +77,10 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 8. Reach YARN UI
    
    ***place the port and the screenshot of YARN UI here***
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/fd088579-a464-4b26-b1b1-7cf59d914097)
+
    
-9. Draw an architecture diagram (e.g. in draw.io) that includes:
+10. Draw an architecture diagram (e.g. in draw.io) that includes:
     1. VPC topology with service assignment to subnets
     2. Description of the components of service accounts
     3. List of buckets for disposal
@@ -64,7 +88,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
   
     ***place your diagram here***
 
-10. Add costs by entering the expected consumption into Infracost
+11. Add costs by entering the expected consumption into Infracost
 
    ***place the expected consumption you entered here***
 
