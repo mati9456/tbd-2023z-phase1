@@ -32,7 +32,7 @@ resource "google_dataproc_cluster" "tbd-dataproc-cluster" {
     }
 
     master_config {
-      num_instances = 1
+      num_instances = var.num_instances_master
       machine_type  = var.machine_type
       disk_config {
         boot_disk_type    = "pd-standard"
@@ -41,7 +41,7 @@ resource "google_dataproc_cluster" "tbd-dataproc-cluster" {
     }
 
     worker_config {
-      num_instances = 2
+      num_instances = var.num_instances_worker
       machine_type  = var.machine_type
       disk_config {
         boot_disk_type    = "pd-standard"
