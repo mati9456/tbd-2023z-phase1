@@ -10,9 +10,9 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
    https://github.com/mati9456/tbd-2023z-phase1
    
-3. Fork https://github.com/bdg-tbd/tbd-2023z-phase1 and follow all steps in README.md.
+2. Fork https://github.com/bdg-tbd/tbd-2023z-phase1 and follow all steps in README.md.
 
-4. Select your project and set budget alerts on 5%, 25%, 50%, 80% of 50$ (in cloud console -> billing -> budget & alerts -> create buget; unclick discounts and promotions&others while creating budget).
+3. Select your project and set budget alerts on 5%, 25%, 50%, 80% of 50$ (in cloud console -> billing -> budget & alerts -> create buget; unclick discounts and promotions&others while creating budget).
 
   ![img.png](doc/figures/discounts.png)
 
@@ -64,23 +64,33 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/42de3c55-270e-4a55-8732-498bc40880af)
 
 
-7. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
+6. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
    
 
 ```terraform plan -target=module.data-pipelines.google_storage_bucket.tbd-data-bucket -var-file ./env/project.tfvars -compact-warnings -out plan.txt```
 ```terraform graph -plan=plan.txt | dot -Tsvg > graph.svg```
-![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/ddcdec60-3562-40bb-91af-da012eac7ae6)
-
 
     ***describe one selected module and put the output of terraform graph for this module here***
+
+![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/ddcdec60-3562-40bb-91af-da012eac7ae6)
+
+The ***Dataproc*** modul was selected for the description. It provides a fully managed and highly scalable service for running Apache Hadoop, Spark, Flink and others. It allows data users integration with different GCP services, such as ***Vertex AI***, ***BigQuery*** and ***Dataplex***. Key features of the ***Dataproc*** include:
+- Serverless Spark that autoscale without any manual infrastructure provisioning or tuning
+- Resizable clusters with various virtual machine types, disk sizes, number of nodes, and networking options
+- Autoscaling clusters with a mechanism for automating cluster resource management
+- Automated security management across all clusters
+
+The main.tf file contains a description of the resources that terraform creates for this module:
+- Resourse `google_project_service` allows management of a single API service for a GCP project
+- Resource `google_dataproc_cluster` manages a cloud ***Dataproc*** cluster resource within GCP. It requires project specification and cluster configuration, including the setup of master and worker machines
    
-8. Reach YARN UI
+7. Reach YARN UI
    
    ***place the port and the screenshot of YARN UI here***
    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/fd088579-a464-4b26-b1b1-7cf59d914097)
 
    
-10. Draw an architecture diagram (e.g. in draw.io) that includes:
+8. Draw an architecture diagram (e.g. in draw.io) that includes:
     1. VPC topology with service assignment to subnets
     2. Description of the components of service accounts
     3. List of buckets for disposal
@@ -88,7 +98,8 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
   
     ***place your diagram here***
 
-11. Add costs by entering the expected consumption into Infracost
+
+9. Add costs by entering the expected consumption into Infracost
 
    ***place the expected consumption you entered here***
    https://github.com/mati9456/tbd-2023z-phase1/blob/infracost/infracost-usage.yml
@@ -97,7 +108,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/38502f80-cf85-4426-b045-283fed5ed4b2)
 
 
-11. Some resources are not supported by infracost yet. Estimate manually total costs of infrastructure based on pricing costs for region used in the project. Include costs of cloud composer, dataproc and AI vertex workbanch and them to infracost estimation.
+10. Some resources are not supported by infracost yet. Estimate manually total costs of infrastructure based on pricing costs for region used in the project. Include costs of cloud composer, dataproc and AI vertex workbanch and them to infracost estimation.
 
     Rersources not caculated by infracost (shown by running infracost breakdown with --show-skipped flag):
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/6f0be827-53fb-43a6-b54d-a8dfd3b79fb7)
@@ -105,8 +116,13 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     ***place your estimation and references here***
 
     ***what are the options for cost optimization?***
+    Some of the most common ways to optimize cloud costs are:
+    - Autoscaling - automatically adjust the number of machines to the current worload. 
+    - Comitted Use Discounts - if we know we will be using a resource for a long time, cloud providers offer discounts for commiting to a longer contract 
+    - Preemptible VMS - using cheaper preemtible VMs. The down side is that our systems need to be able to handle interrupts.
+    - Rightsizing - choosing machines that provide resources closest to our needs. This allows us to not overpay for resources that we will not be using.  
     
-13. Create a BigQuery dataset and an external table
+11. Create a BigQuery dataset and an external table
     
     ***place the code and output here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/5c611f01-aa0f-4f65-8a1a-ec08a40970a8)
@@ -120,13 +136,13 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
     source: [GCP documentation](https://cloud.google.com/bigquery/docs/external-table-definition)
   
-15. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
+12. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
 
     ***place the screenshot of notebook here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/891f1345-8492-41b5-ac1f-d1ccdb417cc1)
 
    
-16. Find and correct the error in spark-job.py
+13. Find and correct the error in spark-job.py
 
     ***describe the cause and how to find the error***
     We found the error in job details of Dataproc:
@@ -139,19 +155,125 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/0a6adaa2-e2ca-4fd4-b036-61f8fc74b3dc)
 
 
-18. Additional tasks using Terraform:
+14. Additional tasks using Terraform:
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
     ***place the link to the modified file and inserted terraform code***
+    modified files:
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/main.tf
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/variables.tf
+    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/main.tf
+    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/variables.tf
+
+    
+    inserted code:
+    /dataproc/main.tf
+    ```
+    master_config {
+      num_instances = var.dataproc_num_masters
+      machine_type  = var.dataproc_master_machine_type
+      disk_config {
+        boot_disk_type    = "pd-standard"
+        boot_disk_size_gb = 100
+      }
+    }
+
+    worker_config {
+      num_instances = var.dataproc_num_workers
+      machine_type  = var.dataproc_worker_machine_type
+      disk_config {
+        boot_disk_type    = "pd-standard"
+        boot_disk_size_gb = 100
+      }
+    }
+    ```
+    /dataproc/variables.tf
+    ```
+    variable "dataproc_num_workers" {
+        type = number
+        default = 2
+        description = "number of dataproc workers"
+    }
+
+    variable "dataproc_num_masters" {
+        type = number
+        default = 1
+        description = "number of dataproc workers"
+    }
+
+    variable "dataproc_master_machine_type" {
+        type        = string
+        default     = "e2-standard-2"
+        description = "Machine type to use for master nodes"
+    }
+
+    variable "dataproc_worker_machine_type" {
+        type        = string
+        default     = "e2-medium"
+        description = "Machine type to use for worker nodes"
+    }
+    ```
+    /vertex-ai-workbench/main.tf
+    ```
+    resource "google_notebooks_instance" "tbd_notebook" {
+        [...]
+        machine_type = var.vertex_machine_type
+        [...]
+    }
+    ```
+    /vertex-ai-workbench/variables.tf
+    ```
+    variable "vertex_machine_type" {
+        type = string
+        default = "e2-medium"
+        description = "Type of machine"
+    }
+    ```
     
     3. Add support for preemptible/spot instances in a Dataproc cluster
 
     ***place the link to the modified file and inserted terraform code***
-    
+    modified files:
+    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/main.tf
+    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/variables.tf
+
+    /dataproc/main.tf:
+    ```
+    preemptible_worker_config {
+        num_instances = var.num_preemptible_workers
+    }
+    ```
+    /dataproc/variables.tf
+    ```
+    variable "num_preemptible_workers" {
+        type = number
+        default =  0
+        description = "number of preemptible dataproc workers"
+    }
+
+    ```
+
     3. Perform additional hardening of Jupyterlab environment, i.e. disable sudo access and enable secure boot
     
     ***place the link to the modified file and inserted terraform code***
+    modified file:
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/main.tf
+    
+    ```
+    resource "google_notebooks_instance" "tbd_notebook" {
+        [...]
+        metadata = {
+            vmDnsSetting : "GlobalDefault"
+            notebook-disable-root = true
+        }
+        [...]
+        shielded_instance_config {
+            enable_secure_boot = false
+        }
+    }
+    ```
+
 
     4. (Optional) Get access to Apache Spark WebUI
 
