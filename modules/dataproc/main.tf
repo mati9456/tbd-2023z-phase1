@@ -32,8 +32,8 @@ resource "google_dataproc_cluster" "tbd-dataproc-cluster" {
     }
 
     master_config {
-      num_instances = 1
-      machine_type  = var.machine_type
+      num_instances = var.dataproc_num_masters
+      machine_type  = var.dataproc_master_machine_type
       disk_config {
         boot_disk_type    = "pd-standard"
         boot_disk_size_gb = 100
@@ -41,13 +41,16 @@ resource "google_dataproc_cluster" "tbd-dataproc-cluster" {
     }
 
     worker_config {
-      num_instances = 2
-      machine_type  = var.machine_type
+      num_instances = var.dataproc_num_workers
+      machine_type  = var.dataproc_worker_machine_type
       disk_config {
         boot_disk_type    = "pd-standard"
         boot_disk_size_gb = 100
       }
-
+    }
+    
+    preemptible_worker_config {
+      num_instances = var.num_preemptible_workers
     }
   }
 }
