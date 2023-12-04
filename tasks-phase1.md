@@ -97,9 +97,9 @@ The main.tf file contains a description of the resources that terraform creates 
     4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
   
     ***place your diagram here***
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/d3e44239-2e89-4e1b-af9a-9af1615a6966)
 
-
-9. Add costs by entering the expected consumption into Infracost
+10. Add costs by entering the expected consumption into Infracost
 
    ***place the expected consumption you entered here***
    https://github.com/mati9456/tbd-2023z-phase1/blob/infracost/infracost-usage.yml
@@ -108,12 +108,28 @@ The main.tf file contains a description of the resources that terraform creates 
    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/38502f80-cf85-4426-b045-283fed5ed4b2)
 
 
-10. Some resources are not supported by infracost yet. Estimate manually total costs of infrastructure based on pricing costs for region used in the project. Include costs of cloud composer, dataproc and AI vertex workbanch and them to infracost estimation.
+11. Some resources are not supported by infracost yet. Estimate manually total costs of infrastructure based on pricing costs for region used in the project. Include costs of cloud composer, dataproc and AI vertex workbanch and them to infracost estimation.
 
     Rersources not caculated by infracost (shown by running infracost breakdown with --show-skipped flag):
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/6f0be827-53fb-43a6-b54d-a8dfd3b79fb7)
 
     ***place your estimation and references here***
+
+      ***Dataproc*** on Compute Engine pricing is based on the size of ***Dataproc*** clusters and the duration of time that they run. The size of a cluster is based on the aggregate number of virtual CPUs across the entire cluster, including the master and worker nodes. The duration of a cluster is the length of time between cluster creation and cluster stopping or deletion.
+      
+      The Dataproc pricing formula is: `$0.010 * number of vCPUs * hourly duration`.
+      
+      So assuming we use cluster with 10 virtual CPUs for both master and worker nodes which run 6 hours a day, the daily cost will be:
+      
+      `daily_cost = $0.010 * 10 * 6 = $0.6`
+       
+      ***Cloud Composer*** uses more complicated pricing model, which differs for the different Composer version. In our project we use Composer 2.4.8, so Composer 2 pricing model should be used for the cost estimations. It depends on *Cloud Composer Compute SKUs* which represent Compute Engine capacity (used number of vCPUs, memory and storage), *Composer Database Storage* size, *Environment* and *Higly Resilent Environment* sizes and location. The pricing for the specific items is presented below.
+      
+      ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/11f11188-b8ea-4c19-adbf-1b883cf68ce1)
+       
+      ***Vertex AI*** is Google Cloud's machine learning platform, offering services for building, deploying, and managing machine learning models. Pricing for ***Vertex AI*** typically involves various factors, including costs of training, online prediction, batch prediction, model deployment, storage, data transfer, image and text generation, and others. The costs of training, deployment and prediction for e.g. ML model working with images are presented below:
+      
+      ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/67d3cd4a-c396-4e3a-a4f5-1cdfae56b003)
 
     ***what are the options for cost optimization?***
     Some of the most common ways to optimize cloud costs are:
@@ -122,7 +138,7 @@ The main.tf file contains a description of the resources that terraform creates 
     - Preemptible VMS - using cheaper preemtible VMs. The down side is that our systems need to be able to handle interrupts.
     - Rightsizing - choosing machines that provide resources closest to our needs. This allows us to not overpay for resources that we will not be using.  
     
-11. Create a BigQuery dataset and an external table
+12. Create a BigQuery dataset and an external table
     
     ***place the code and output here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/5c611f01-aa0f-4f65-8a1a-ec08a40970a8)
@@ -136,13 +152,13 @@ The main.tf file contains a description of the resources that terraform creates 
 
     source: [GCP documentation](https://cloud.google.com/bigquery/docs/external-table-definition)
   
-12. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
+13. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
 
     ***place the screenshot of notebook here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/891f1345-8492-41b5-ac1f-d1ccdb417cc1)
 
    
-13. Find and correct the error in spark-job.py
+14. Find and correct the error in spark-job.py
 
     ***describe the cause and how to find the error***
     We found the error in job details of Dataproc:
@@ -155,7 +171,7 @@ The main.tf file contains a description of the resources that terraform creates 
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/0a6adaa2-e2ca-4fd4-b036-61f8fc74b3dc)
 
 
-14. Additional tasks using Terraform:
+15. Additional tasks using Terraform:
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
