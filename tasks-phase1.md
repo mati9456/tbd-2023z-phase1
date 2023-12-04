@@ -34,6 +34,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
         * member = "serviceAccount:${var.data_service_account}"
 
     ***insert the link to the modified file and terraform snippet here***
+   
    https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/data-pipeline/main.tf
    ```
     resource "google_storage_bucket" "tbd-data-bucket" {
@@ -64,15 +65,16 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
    ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/42de3c55-270e-4a55-8732-498bc40880af)
 
 
-6. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
+7. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
    
 
 ```terraform plan -target=module.data-pipelines.google_storage_bucket.tbd-data-bucket -var-file ./env/project.tfvars -compact-warnings -out plan.txt```
+
 ```terraform graph -plan=plan.txt | dot -Tsvg > graph.svg```
 
     ***describe one selected module and put the output of terraform graph for this module here***
 
-![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/ddcdec60-3562-40bb-91af-da012eac7ae6)
+![MicrosoftTeams-image](https://github.com/mati9456/tbd-2023z-phase1/assets/58910573/909e2d58-26ab-4ea5-af4a-1189a557a216)
 
 The ***Dataproc*** modul was selected for the description. It provides a fully managed and highly scalable service for running Apache Hadoop, Spark, Flink and others. It allows data users integration with different GCP services, such as ***Vertex AI***, ***BigQuery*** and ***Dataplex***. Key features of the ***Dataproc*** include:
 - Serverless Spark that autoscale without any manual infrastructure provisioning or tuning
@@ -80,7 +82,7 @@ The ***Dataproc*** modul was selected for the description. It provides a fully m
 - Autoscaling clusters with a mechanism for automating cluster resource management
 - Automated security management across all clusters
 
-The main.tf file contains a description of the resources that terraform creates for this module:
+The `main.tf` file contains a description of the resources that terraform creates for this module:
 - Resourse `google_project_service` allows management of a single API service for a GCP project
 - Resource `google_dataproc_cluster` manages a cloud ***Dataproc*** cluster resource within GCP. It requires project specification and cluster configuration, including the setup of master and worker machines
    
@@ -102,6 +104,7 @@ The main.tf file contains a description of the resources that terraform creates 
 10. Add costs by entering the expected consumption into Infracost
 
    ***place the expected consumption you entered here***
+   
    https://github.com/mati9456/tbd-2023z-phase1/blob/infracost/infracost-usage.yml
 
    ***place the screenshot from infracost output here***
@@ -115,12 +118,8 @@ The main.tf file contains a description of the resources that terraform creates 
 
     ***place your estimation and references here***
 
-      ***Dataproc*** on Compute Engine pricing is based on the size of ***Dataproc*** clusters and the duration of time that they run. The size of a cluster is based on the aggregate number of virtual CPUs across the entire cluster, including the master and worker nodes. The duration of a cluster is the length of time between cluster creation and cluster stopping or deletion.
-      
-      The Dataproc pricing formula is: `$0.010 * number of vCPUs * hourly duration`.
-      
-      So assuming we use cluster with 10 virtual CPUs for both master and worker nodes which run 6 hours a day, the daily cost will be:
-      
+      ***Dataproc*** on Compute Engine pricing is based on the size of ***Dataproc*** clusters and the duration of time that they run. The size of a cluster is based on the aggregate number of virtual CPUs across the entire cluster, including the master and worker nodes. The duration of a cluster is the length of time between cluster creation and cluster stopping or deletion. The Dataproc pricing formula is: `$0.010 * number of vCPUs * hourly duration`. So assuming we use cluster with 10 virtual CPUs for both master and worker nodes which run 6 hours a day, the daily cost will be:
+    
       `daily_cost = $0.010 * 10 * 6 = $0.6`
        
       ***Cloud Composer*** uses more complicated pricing model, which differs for the different Composer version. In our project we use Composer 2.4.8, so Composer 2 pricing model should be used for the cost estimations. It depends on *Cloud Composer Compute SKUs* which represent Compute Engine capacity (used number of vCPUs, memory and storage), *Composer Database Storage* size, *Environment* and *Higly Resilent Environment* sizes and location. The pricing for the specific items is presented below.
@@ -138,7 +137,7 @@ The main.tf file contains a description of the resources that terraform creates 
     - Preemptible VMS - using cheaper preemtible VMs. The down side is that our systems need to be able to handle interrupts.
     - Rightsizing - choosing machines that provide resources closest to our needs. This allows us to not overpay for resources that we will not be using.  
     
-12. Create a BigQuery dataset and an external table
+13. Create a BigQuery dataset and an external table
     
     ***place the code and output here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/5c611f01-aa0f-4f65-8a1a-ec08a40970a8)
@@ -152,13 +151,13 @@ The main.tf file contains a description of the resources that terraform creates 
 
     source: [GCP documentation](https://cloud.google.com/bigquery/docs/external-table-definition)
   
-13. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
+14. Start an interactive session from Vertex AI workbench (steps 7-9 in README):
 
     ***place the screenshot of notebook here***
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/891f1345-8492-41b5-ac1f-d1ccdb417cc1)
 
    
-14. Find and correct the error in spark-job.py
+15. Find and correct the error in spark-job.py
 
     ***describe the cause and how to find the error***
     We found the error in job details of Dataproc:
@@ -171,7 +170,7 @@ The main.tf file contains a description of the resources that terraform creates 
     ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/0a6adaa2-e2ca-4fd4-b036-61f8fc74b3dc)
 
 
-15. Additional tasks using Terraform:
+16. Additional tasks using Terraform:
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
@@ -179,8 +178,8 @@ The main.tf file contains a description of the resources that terraform creates 
     modified files:
     - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/main.tf
     - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/variables.tf
-    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/main.tf
-    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/variables.tf
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/main.tf
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/vertex-ai-workbench/variables.tf
 
     
     inserted code:
@@ -251,8 +250,8 @@ The main.tf file contains a description of the resources that terraform creates 
 
     ***place the link to the modified file and inserted terraform code***
     modified files:
-    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/main.tf
-    -https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/variables.tf
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/main.tf
+    - https://github.com/mati9456/tbd-2023z-phase1/blob/master/modules/dataproc/variables.tf
 
     /dataproc/main.tf:
     ```
