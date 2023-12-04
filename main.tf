@@ -40,21 +40,14 @@ module "vertex_ai_workbench" {
   subnet       = module.vpc.subnets[local.notebook_subnet_id].id
 
   ai_notebook_instance_owner = var.ai_notebook_instance_owner
-  ## To remove before workshop
-  # FIXME:remove
-  ai_notebook_image_repository = element(split(":", module.jupyter_docker_image.jupyter_image_name), 0)
-  ai_notebook_image_tag        = element(split(":", module.jupyter_docker_image.jupyter_image_name), 1)
-  ## To remove before workshop
 }
 
-#
 module "dataproc" {
   depends_on   = [module.vpc]
   source       = "./modules/dataproc"
   project_name = var.project_name
   region       = var.region
   subnet       = module.vpc.subnets[local.notebook_subnet_id].id
-  machine_type = "e2-standard-2"
 }
 
 ## Uncomment for Dataproc batches (serverless)
