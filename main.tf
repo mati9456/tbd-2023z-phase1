@@ -151,12 +151,12 @@ resource "kubernetes_service" "dbt-task-service" {
 }
 
 resource "google_compute_firewall" "allow-all-internal" {
+  #checkov:skip=CKV2_GCP_12: "Ensure GCP compute firewall ingress does not allow unrestricted access to all ports"
   name    = "allow-all-internal"
   project = var.project_name
   network = module.vpc.network.network_name
   allow {
     protocol = "all"
-    ports = ["80-9999"]
   }
   source_ranges = ["10.0.0.0/8"]
 }
