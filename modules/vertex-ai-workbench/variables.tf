@@ -33,15 +33,3 @@ variable "ai_notebook_image_tag" {
   type    = string
   default = "latest"
 }
-
-variable "vertex_machine_type" {
-	type = string
-	default = "e2-medium"
-	description = "Type of machine"
-}
-
-variable "vertex_num_workers" {
-  type = number
-  default = 2
-  description = "number of dataproc workers"
-}

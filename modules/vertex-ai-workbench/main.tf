@@ -2,7 +2,6 @@ data "google_project" "project" {
   project_id = var.project_name
 }
 
-
 locals {
   zone                = "${var.region}-b"
   gce_service_account = "${data.google_project.project.number}-compute@developer.gserviceaccount.com"
@@ -11,7 +10,7 @@ locals {
 resource "google_project_service" "notebooks" {
   provider           = google
   service            = "notebooks.googleapis.com"
-  disable_on_destroy = true
+  disable_on_destroy = false
 }
 
 
@@ -46,11 +45,12 @@ resource "google_storage_bucket_object" "post-startup" {
 }
 
 
+
 resource "google_notebooks_instance" "tbd_notebook" {
   #checkov:skip=CKV2_GCP_18: "Ensure GCP network defines a firewall and does not use the default firewall"
   depends_on   = [google_project_service.notebooks]
   location     = local.zone
-  machine_type = var.vertex_machine_type
+  machine_type = "e2-standard-2"
   name         = "${var.project_name}-notebook"
   container_image {
     repository = var.ai_notebook_image_repository
@@ -66,13 +66,8 @@ resource "google_notebooks_instance" "tbd_notebook" {
   instance_owners = [var.ai_notebook_instance_owner]
   metadata = {
     vmDnsSetting : "GlobalDefault"
-    notebook-disable-root = true
   }
   post_startup_script = "gs://${google_storage_bucket_object.post-startup.bucket}/${google_storage_bucket_object.post-startup.name}"
-  
-  shielded_instance_config {
-    enable_secure_boot = false
-  }
 }
 
 
