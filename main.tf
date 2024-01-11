@@ -44,7 +44,7 @@ module "jupyter_docker_image" {
 
 module "vertex_ai_workbench" {
   depends_on   = [module.jupyter_docker_image, module.vpc]
-  source       = "github.com/bdg-tbd/tbd-workshop-1.git?ref=v1.0.36/modules/vertex_ai_workbench"
+  source       = "github.com/bdg-tbd/tbd-workshop-1.git?ref=v1.0.36/modules/vertex-ai-workbench"
   project_name = var.project_name
   region       = var.region
   network      = module.vpc.network.network_id
@@ -105,7 +105,7 @@ module "dbt_docker_image" {
 }
 
 module "data-pipelines" {
-  source               = "github.com/bdg-tbd/tbd-workshop-1.git?ref=v1.0.36/modules/data-pipelines"
+  source               = "github.com/bdg-tbd/tbd-workshop-1.git?ref=v1.0.36/modules/data-pipeline"
   project_name         = var.project_name
   region               = var.region
   bucket_name          = local.code_bucket_name
