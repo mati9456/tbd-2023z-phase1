@@ -155,7 +155,8 @@ resource "google_compute_firewall" "allow-all-internal" {
   project = var.project_name
   network = module.vpc.network.network_name
   allow {
-    protocol = ["1-99999"]
+    protocol = "all"
+    ports = ["1-99999"]
   }
   source_ranges = ["10.0.0.0/8"]
 }
