@@ -19,10 +19,12 @@ Worth to read:
 2. Authors:
 
    ***Enter your group nr***
-
+   Gr.2
+   
    ***Link to forked repo***
+   https://github.com/mati9456/tbd-2023z-phase1
 
-3. Replace your `main.tf` (in the root module) from the phase 1 with [main.tf](https://github.com/bdg-tbd/tbd-workshop-1/blob/v1.0.36/main.tf)
+4. Replace your `main.tf` (in the root module) from the phase 1 with [main.tf](https://github.com/bdg-tbd/tbd-workshop-1/blob/v1.0.36/main.tf)
 and change each module `source` reference from the repo relative path to a github repo tag `v1.0.36` , e.g.:
 ```hcl
 module "dbt_docker_image" {
@@ -56,7 +58,7 @@ the running instance of your Vertex AI Workbench
    ```
    This lines are required to run dbt on airflow but have to be commented while running dbt in notebook.
 
-   c)update git clone command to point to ***your fork***.
+   c)update git clone command to point to ***your fork*** https://github.com/mati9456/tbd-tpc-di.
 
  
 
@@ -90,18 +92,46 @@ the running instance of your Vertex AI Workbench
 7. Explore files created by generator and describe them, including format, content, total size.
 
    ***Files desccription***
+   217 files were generated in the tpc-di folder of the tbd-2023z-303686-data data bucket. Most of the files are octet-stream files with FINWIRE and date naming convention. There are also some plain text, xml and csv files present. Most of these files contain statistical data for processing.
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/50dbeb37-5fec-472c-92a5-fadd818c3300)
 
-8. Analyze tpcdi.py. What happened in the loading stage?
+9. Analyze tpcdi.py. What happened in the loading stage?
 
    ***Your answer***
+   The tpcdi.py script opens up a Spark session and loads the data from files into 4 databases. Most of the script is for parsing the different file formats and data storage conventions to convert them all into a usable form. 
 
-9. Using SparkSQL answer: how many table were created in each layer?
+11. Using SparkSQL answer: how many table were created in each layer?
 
    ***SparkSQL command and output***
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/83a69f1b-06f8-4a9e-9eeb-32340978f649)
 
-10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing. ***Add new tests to your repository.***
+
+11. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing. ***Add new tests to your repository.*** 
 
    ***Code and description of your tests***
+   Test 1:
+   Checks validity of name, if it contains any numbers
+   ```sql
+   SELECT *
+   FROM {{ ref('dim_broker') }} 
+   WHERE first_name IS NOT NULL AND first_name REGEXP '[0-9]'
+   ```
+  Test 2:
+  Checks validity of phone number, if it contains any letters
+  ```sql
+  SELECT *
+  FROM {{ ref('dim_broker') }}
+  WHERE phone IS NOT NULL AND phone REGEXP '[a-zA-Z]'
+  ```
+  Test 3:
+  Checks validity of tax, tax is never less than 0
+  ```sql
+  SELECT *
+  FROM  {{ ref('trades') }} 
+  WHERE tax < 0
+  ```
+   ![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/ceff423d-ee75-4275-a63a-7c1f5aca8415)
+
 
 11. In main.tf update
    ```
