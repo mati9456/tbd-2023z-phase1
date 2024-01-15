@@ -12,8 +12,8 @@ locals {
   spark_blockmgr_port     = 30001
   dbt_version             = "1.7.3"
   dbt_spark_version       = "1.7.1"
-  dbt_git_repo            = "https://github.com/mwiewior/tbd-tpc-di.git"
-  dbt_git_repo_branch     = "main"
+  dbt_git_repo            = "https://github.com/mati9456/tbd-tpc-di.git"
+  dbt_git_repo_branch     = "notebook"
 }
 
 module "vpc" {
