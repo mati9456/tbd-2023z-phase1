@@ -143,3 +143,5 @@ the running instance of your Vertex AI Workbench
 12. Redeploy infrastructure and check if the DAG finished with no errors:
 
 ***The screenshot of Apache Aiflow UI***
+![image](https://github.com/mati9456/tbd-2023z-phase1/assets/23421265/312ed2de-5ac1-4d81-9e4b-0b1fa2fe4da0)
+
